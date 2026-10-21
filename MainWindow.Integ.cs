@@ -18,7 +18,7 @@ public sealed class LightDeviceVm
 }
 
 /// <summary>
-/// Aba RESET INTEGRAÇÃO: controle de iluminação e efeitos. Pontes: Corsair iCUE (SDK), OpenRGB (MSI Mystic Light, Gigabyte RGB Fusion,
+/// Aba ESTRATÉGIA INTEGRAÇÃO: controle de iluminação e efeitos. Pontes: Corsair iCUE (SDK), OpenRGB (MSI Mystic Light, Gigabyte RGB Fusion,
 /// ASUS Aura e outras marcas) e Razer Chroma. Todos os dispositivos aparecem numa lista só e recebem o mesmo efeito.
 /// </summary>
 public partial class MainWindow
@@ -151,7 +151,7 @@ public partial class MainWindow
                 if (_cue.State != 6)
                 {
                     LightStatus.Text = "Não consegui conectar ao iCUE (" + (err != 0 ? CorsairSdk.ErrorText(err) : CorsairSdk.StateText(_cue.State)) + "). " +
-                        "Abra o iCUE, vá em Configurações e ative o SDK (Enable SDK). Se o iCUE estiver em outra conta do Windows ou com permissão maior que a do ResetExplode, a conexão também falha.";
+                        "Abra o iCUE, vá em Configurações e ative o SDK (Enable SDK). Se o iCUE estiver em outra conta do Windows ou com permissão maior que a do ESTRATÉGIA DIAGNÓSTICO, a conexão também falha.";
                     return;
                 }
             }
@@ -273,9 +273,9 @@ public partial class MainWindow
     {
         if (_lightBusy) return;
         var ok = MessageBox.Show(this,
-            "O RESET EXPLODE vai baixar o SDK oficial da Corsair (github.com/CorsairOfficial/cue-sdk), extrair somente o arquivo " +
+            "O ESTRATÉGIA DIAGNÓSTICO vai baixar o SDK oficial da Corsair (github.com/CorsairOfficial/cue-sdk), extrair somente o arquivo " +
             "iCUESDK.x64_2019.dll para a pasta\n" + CorsairSdkInstaller.TargetPath + "\ne conferir a assinatura digital dele.\n\nContinuar?",
-            "RESET EXPLODE · SDK da Corsair", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            "ESTRATÉGIA DIAGNÓSTICO · SDK da Corsair", MessageBoxButton.YesNo, MessageBoxImage.Question);
         if (ok != MessageBoxResult.Yes) return;
 
         _lightBusy = true;

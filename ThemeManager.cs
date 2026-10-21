@@ -5,7 +5,7 @@ namespace ResetExplode;
 
 /// <summary>
 /// Troca entre modo escuro e claro substituindo os pincéis da paleta (Theme.xaml). O XAML os referencia com DynamicResource,
-/// então a troca vale na hora, sem recarregar janelas. Overlay e aviso de dispositivo ficam sempre escuros (aparecem sobre jogos).
+/// então a troca vale na hora, sem recarregar janelas. O aviso de dispositivo fica sempre escuro (aparece sobre qualquer janela).
 /// </summary>
 public static class ThemeManager
 {

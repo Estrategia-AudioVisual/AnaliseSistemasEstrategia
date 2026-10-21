@@ -5,7 +5,7 @@ using System.Windows.Media;
 
 namespace ResetExplode;
 
-/// <summary>Aba RESET OC: ajustes da GPU (NVML), verificador de estabilidade e guia de overclock na BIOS.</summary>
+/// <summary>Aba ESTRATÉGIA OC: ajustes da GPU (NVML), verificador de estabilidade e guia de overclock na BIOS.</summary>
 public partial class MainWindow
 {
     public sealed record GuideStep(string Number, string Title, string Where, string Text);
@@ -30,7 +30,7 @@ public partial class MainWindow
     private void InitOc()
     {
         nint ocGpu = OcGpu;
-        OcGpuTitle.Text = ((_gpus.Count > 0) ? ("GPU · " + GameCatalog.ShortGpuName(_gpus[0].Name).ToUpperInvariant()) : "GPU");
+        OcGpuTitle.Text = ((_gpus.Count > 0) ? ("GPU · " + HardwareNames.ShortGpuName(_gpus[0].Name).ToUpperInvariant()) : "GPU");
         if (ocGpu == IntPtr.Zero)
         {
             OcGpuState.Text = "Ajustes disponíveis só para placas NVIDIA (via driver oficial).";
@@ -533,7 +533,7 @@ public partial class MainWindow
         bool flag = item.Contains("Gigabyte", StringComparison.OrdinalIgnoreCase);
         bool flag2 = item.Contains("ASUS", StringComparison.OrdinalIgnoreCase);
         bool flag3 = item.Contains("Micro-Star", StringComparison.OrdinalIgnoreCase) || item.Contains("MSI", StringComparison.OrdinalIgnoreCase);
-        string text = GameCatalog.ShortCpuName(_cpuName);
+        string text = HardwareNames.ShortCpuName(_cpuName);
         bool num = _cpuName.Contains("Ryzen", StringComparison.OrdinalIgnoreCase);
         string text2 = ((flag ? "Gigabyte" : (item.Split(' ').FirstOrDefault() ?? "")) + " " + item2).Trim();
         OcGuideTitle.Text = "GUIA: OVERCLOCK NA BIOS · " + text2.ToUpperInvariant() + " · " + text.ToUpperInvariant();

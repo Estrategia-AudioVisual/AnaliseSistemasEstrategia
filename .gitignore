@@ -2,7 +2,7 @@
 bin/
 obj/
 publish/
-ResetExplode-dist/
+EstrategiaDiagnostico-dist/
 *.exe
 *.dll
 *.pdb
@@ -15,6 +15,3 @@ ResetExplode-dist/
 
 # Local
 *.log
-
-# Drivers seriais embutidos (RESET MAKER): as DLLs fazem parte dos pacotes assinados
-!Drivers/**

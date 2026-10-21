@@ -220,7 +220,7 @@ public static class NetworkTest
         var verdict = bad ? DiskVerdict.Critical : warn.Any(w => !w.StartsWith("O roteador não responde")) ? DiskVerdict.Warning : DiskVerdict.Good;
         string label = verdict switch { DiskVerdict.Critical => "RUIM", DiskVerdict.Warning => "ATENÇÃO", _ => "ESTÁVEL" };
         string reasons = warn.Count > 0 ? string.Join(" ", warn)
-            : "Latência baixa, sem perda de pacotes e sem sinais de bufferbloat. Se o jogo ainda engasga, o problema provavelmente não é a conexão: veja o Gargalo e as temperaturas.";
+            : "Latência baixa, sem perda de pacotes e sem sinais de bufferbloat. Se o jogo ainda engasga, o problema provavelmente não é a conexão: veja as temperaturas e a carga em Sensores.";
 
         var m = new List<KeyValuePair<string, string>>();
         foreach (var p in pings) m.Add(new($"{p.Name} ({p.Address})", p.Text));

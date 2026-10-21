@@ -61,8 +61,8 @@ public partial class MainWindow
     {
         foreach (var r in _settings.BenchRuns)
         {
-            if (r.Multi is double m) yield return new DashEvent("", "RESET BENCH", "Render · multi-core", $"{m:N0} pts", r.Date);
-            else if (r.Single is double s) yield return new DashEvent("", "RESET BENCH", "Render · single-core", $"{s:N0} pts", r.Date);
+            if (r.Multi is double m) yield return new DashEvent("", "ESTRATÉGIA BENCH", "Render · multi-core", $"{m:N0} pts", r.Date);
+            else if (r.Single is double s) yield return new DashEvent("", "ESTRATÉGIA BENCH", "Render · single-core", $"{s:N0} pts", r.Date);
         }
         foreach (var r in _settings.BenchRecords)
         {
@@ -121,14 +121,14 @@ public partial class MainWindow
     {
         var rows = new List<DashComponent>
         {
-            new("", "Processador", GameCatalog.ShortCpuName(_cpuName),
+            new("", "Processador", HardwareNames.ShortCpuName(_cpuName),
                 F(_monitor.CpuTemperature, "0", " °C"), F(_monitor.CpuLoad, "0", " %"), F(CpuClockAvg(), "0", " MHz"),
                 F(_monitor.CpuPower, "0", " W"), "PageSensors"),
         };
         if (_gpus.Count > 0)
         {
             uint? clk = _gpus[0].NvmlHandle != IntPtr.Zero ? Nvml.Clock(_gpus[0].NvmlHandle, Nvml.ClockGraphics) : null;
-            rows.Add(new("", "Placa de vídeo", GameCatalog.ShortGpuName(_gpus[0].Name),
+            rows.Add(new("", "Placa de vídeo", HardwareNames.ShortGpuName(_gpus[0].Name),
                          F(MainGpuTemp(), "0", " °C"), F(MainGpuLoad(), "0", " %"), clk is uint c ? $"{c} MHz" : "—",
                          F(MainGpuPower(), "0", " W"), "PageGpu"));
         }
@@ -159,7 +159,7 @@ public partial class MainWindow
             }
             else DashScoreDelta.Text = "";
         }
-        else { DashScore.Text = "—"; DashScoreDelta.Text = ""; DashScoreSub.Text = "rode o RESET BENCH para ter uma nota"; }
+        else { DashScore.Text = "—"; DashScoreDelta.Text = ""; DashScoreSub.Text = "rode o ESTRATÉGIA BENCH para ter uma nota"; }
 
         string Last(string test) => _settings.BenchRecords.FirstOrDefault(r => r.Test == test)?.Summary.Split('·')[0].Trim() ?? "—";
         var single = _settings.BenchRuns.FirstOrDefault(r => r.Single != null)?.Single;
@@ -169,8 +169,8 @@ public partial class MainWindow
             new KeyValuePair<string, string>("Cena de jogo (GPU)", Last("gpu")),
             new KeyValuePair<string, string>("Simulação de jogo", Last("sim")),
         };
-        DashCpuName.Text = GameCatalog.ShortCpuName(_cpuName);
-        DashGpuName.Text = _gpus.Count > 0 ? GameCatalog.ShortGpuName(_gpus[0].Name) : "—";
+        DashCpuName.Text = HardwareNames.ShortCpuName(_cpuName);
+        DashGpuName.Text = _gpus.Count > 0 ? HardwareNames.ShortGpuName(_gpus[0].Name) : "—";
     }
 
     // ---------------- gráfico de área ----------------
@@ -355,18 +355,9 @@ public partial class MainWindow
         var gm = _tweaks.FirstOrDefault(t => t.Id == "gamemode");
         var dvr = _tweaks.FirstOrDefault(t => t.Id == "gamedvr");
         try { gm?.Refresh(); dvr?.Refresh(); } catch { }
-        if (gm != null) list.Add(Item(gm.IsOn, "Modo de Jogo ligado", "O Windows prioriza o jogo.", "Desligado: ligue em RESET OTIMIZA."));
+        if (gm != null) list.Add(Item(gm.IsOn, "Modo de Jogo ligado", "O Windows prioriza o jogo.", "Desligado: ligue em ESTRATÉGIA OTIMIZA."));
         if (dvr != null) list.Add(Item(dvr.IsOn, "Gravação em segundo plano desligada", "O Game Bar não grava o tempo todo.",
                                        "O Game DVR está gravando: custa FPS."));
-
-        try
-        {
-            var (reserved, inUse) = UsbCleaner.ComStatus();
-            int stuck = reserved.Except(inUse).Count();
-            list.Add(Item(stuck == 0, "Portas COM livres", "Nenhum número COM preso.",
-                          $"{stuck} números presos por dispositivos antigos."));
-        }
-        catch { }
 
         _health = list;
         DashHealth.ItemsSource = _health;
